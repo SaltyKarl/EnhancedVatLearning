@@ -8,13 +8,7 @@
 	</supportedVersions>
 	<packageId>smartkar.enhancedvatlearning</packageId>
 	<modDependencies>
-		<li>
-			<packageId>brrainz.harmony</packageId>
-			<displayName>Harmony</displayName>
-			<steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
-			<downloadUrl>https://github.com/pardeike/HarmonyRimWorld/releases/latest</downloadUrl>
-		</li>
-
+		
 		<li>
 			<packageId>ludeon.rimworld.biotech</packageId>
 			<displayName>Biotech</displayName>
@@ -22,7 +16,6 @@
 
 	</modDependencies>
 	<loadAfter>
-		<li>brrainz.harmony</li>
 		<li>ludeon.rimworld.biotech</li>
 	</loadAfter>
 	<description>Adds three new machines designed to help combat the abysmal quality of vat-grown pawns by increasing their learning rate and allowing them to get passions and traits.</description>
