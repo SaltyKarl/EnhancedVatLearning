@@ -141,7 +141,7 @@ namespace EnhancedVatLearning
 
                 foreach (SkillRecord record in skillRecords)
                 {
-                    skillWeights.Add(Math.Sqrt(record.Level) * record.LearnRateFactor(true));
+                    skillWeights.Add(Math.Sqrt(record.Level) * record.LearnRateFactor(true) * (record.Level >= 20 ? 0 : 1));
                     passionWeights.Add(2 - (int)record.passion);
                 }
 

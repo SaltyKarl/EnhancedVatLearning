@@ -126,8 +126,8 @@
         <label>cognition development engine</label>
         <description>An advanced machine designed to help mental development. By simulating complex problems and moral dilemmas and presenting them to vat-growing pawns to resolve, it encourages intellectual growth and development of distinct, complex personality. It increases the vat learning rate of all growth vats in a 7 tile radius by 25%, alongside giving every pawn connected to it a chance to develop a random trait. Connecting more than one cognition development engine to the same growth vat will have no effect.</description>
         <graphicData>
-            <texPath>Things/Building/VRSimulator</texPath>
-            <graphicClass>Graphic_Single</graphicClass>
+            <texPath>Things/Building/CognitionDevelopmentEngine</texPath>
+            <graphicClass>Graphic_Multi</graphicClass>
             <drawSize>(2, 2)</drawSize>
             <damageData>
               <cornerTL>Damage/Corner</cornerTL>
@@ -136,6 +136,7 @@
               <cornerBR>Damage/Corner</cornerBR>
             </damageData>
         </graphicData>
+        <defaultPlacingRot>South</defaultPlacingRot>
 
         <researchPrerequisites>
             <li>EVL_VR_Simulators</li>

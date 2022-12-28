@@ -14,6 +14,7 @@
                             <linkableFacilities>
                                 <li>EVL_Neurostimulator</li>
                                 <li>EVL_VR_Simulator</li>
+								<li>EVL_Cognition_Engine</li>
                             </linkableFacilities>
                         </li>
 					</value>
@@ -24,6 +25,7 @@
 					<value>
 						<li>EVL_Neurostimulator</li>
                         <li>EVL_VR_Simulator</li>
+						<li>EVL_Cognition_Engine</li>
 					</value>
 				</match>
 			</li>
