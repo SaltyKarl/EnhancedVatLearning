@@ -25,5 +25,5 @@
 		<li>brrainz.harmony</li>
 		<li>ludeon.rimworld.biotech</li>
 	</loadAfter>
-	<description>Adds two new machines designed to help combat the abysmal quality of vat-grown pawns by increasing their learning rate.</description>
+	<description>Adds three new machines designed to help combat the abysmal quality of vat-grown pawns by increasing their learning rate and allowing them to get passions and traits.</description>
 </ModMetaData>
