@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32929.385
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnhancedVatLearning", "EnhancedVatLearning.csproj", "{2AFA8AA3-6927-4515-82FE-C0930F12FD20}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2AFA8AA3-6927-4515-82FE-C0930F12FD20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AFA8AA3-6927-4515-82FE-C0930F12FD20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AFA8AA3-6927-4515-82FE-C0930F12FD20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AFA8AA3-6927-4515-82FE-C0930F12FD20}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {94D17336-B6D2-4CEA-AA0C-784CCE472E49}
+	EndGlobalSection
+EndGlobal

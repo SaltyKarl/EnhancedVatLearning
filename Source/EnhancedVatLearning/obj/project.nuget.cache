@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "6dLDS60HjRV1s5xJ5KelDBZ1A22p/HKppTi9zt2IuHX3ofbHsIlYMTSfku+rMVM/uagcgNExqJlhQbI5GLyczg==",
+  "success": true,
+  "projectFilePath": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\EnhancedVatLearning\\Source\\EnhancedVatLearning\\EnhancedVatLearning.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Artemy\\.nuget\\packages\\krafs.rimworld.ref\\1.4.3580\\krafs.rimworld.ref.1.4.3580.nupkg.sha512"
+  ],
+  "logs": []
+}

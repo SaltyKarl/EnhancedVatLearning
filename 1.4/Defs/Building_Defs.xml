@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+    <ThingDef ParentName="BuildingBase">
+        <defName>EVL_Neurostimulator</defName>
+        <label>neurostimulator</label>
+        <description>A complex piece of machinery designed to stimulate the brains of vat-growing pawns through gentle electrical pulses. Increases the vat learning rate of all adjacent growth vats by 50%. Attaching more than one neurostimulator to the same growth vat will have no effect.</description>
+        <graphicData>
+            <texPath>Things/Building/Neurostimulator</texPath>
+            <graphicClass>Graphic_Multi</graphicClass>
+            <shadowData>
+                <volume>(0.55, 0.30, 0.40)</volume>
+            </shadowData>
+            <damageData>
+                <rectN>(0.078125,0.46875,0.859375,0.53125)</rectN>
+                <rectS>(0.078125,0.46875,0.859375,0.53125)</rectS>
+                <rectE>(0.125,0.46875,0.625,0.296875)</rectE>
+                <rectW>(0.25,0.46875,0.625,0.296875)</rectW>
+                <cornerTR>Damage/Corner</cornerTR>
+            </damageData>
+        </graphicData>
+        <defaultPlacingRot>South</defaultPlacingRot>
+        <researchPrerequisites>
+            <li>EVL_Neurostimulators</li>
+        </researchPrerequisites>
+        <altitudeLayer>Building</altitudeLayer>
+        <passability>PassThroughOnly</passability>
+        <fillPercent>0.2</fillPercent>
+        <statBases>
+            <MaxHitPoints>100</MaxHitPoints>
+            <WorkToBuild>8000</WorkToBuild>
+            <Mass>20</Mass>
+            <Flammability>0.7</Flammability>
+        </statBases>
+        <size>(1,1)</size>
+        <costList>
+            <Steel>50</Steel>
+            <ComponentIndustrial>5</ComponentIndustrial>
+        </costList>
+        <building>
+            <destroySound>BuildingDestroyed_Metal_Small</destroySound>
+        </building>
+        <designationCategory>Biotech</designationCategory>
+        <minifiedDef>MinifiedThing</minifiedDef>
+        <thingCategories>
+            <li>BuildingsMisc</li>
+        </thingCategories>
+        <comps>
+            <li Class="CompProperties_Power">
+                <compClass>CompPowerTrader</compClass>
+                <shortCircuitInRain>true</shortCircuitInRain>
+                <basePowerConsumption>120</basePowerConsumption>
+            </li>
+            <li Class="CompProperties_Flickable"/>
+            <li Class="CompProperties_Facility">
+                <maxSimultaneous>8</maxSimultaneous>
+                <mustBePlacedAdjacent>true</mustBePlacedAdjacent>
+            </li>
+        </comps>
+        <placeWorkers>
+            <li>PlaceWorker_ShowFacilitiesConnections</li>
+        </placeWorkers>
+        <constructionSkillPrerequisite>8</constructionSkillPrerequisite>
+        <uiIconScale>0.85</uiIconScale>
+    </ThingDef>
+
+    <ThingDef ParentName="BuildingBase">
+        <defName>EVL_VR_Simulator</defName>
+        <label>VR simulator</label>
+        <description>VR simulator: A powerful supercomputer housing a subpersona AI capable of advanced reality simulation. Connected to a vat-growing pawn via a neural link, it provides them with an interactive environment, enhancing their mental development and letting them discover their passions. Gains further effectiveness when connected to multiple occupied growth vats, providing the pawns inside with a virtual playground to socialize and grow together in. Increases the vat learning rate of all growth vats in a 7 tile radius by 15%, gaining additional 15% effectiveness for each occupied growth vat connected to it, stacking up to 6 times. Additionally, every pawn connected to the VR simulator will have a chance to gain random passions based on their learned skills and amount of pawns connected to it. Connecting more than one VR simulator to the same growth vat will have no effect.</description>
+        <graphicData>
+            <texPath>Things/Building/VRSimulator</texPath>
+            <graphicClass>Graphic_Single</graphicClass>
+            <drawSize>(4, 4)</drawSize>
+            <damageData>
+              <cornerTL>Damage/Corner</cornerTL>
+              <cornerTR>Damage/Corner</cornerTR>
+              <cornerBL>Damage/Corner</cornerBL>
+              <cornerBR>Damage/Corner</cornerBR>
+            </damageData>
+        </graphicData>
+
+        <researchPrerequisites>
+            <li>EVL_VR_Simulators</li>
+        </researchPrerequisites>
+
+        <altitudeLayer>Building</altitudeLayer>
+        <passability>PassThroughOnly</passability>
+        <fillPercent>0.75</fillPercent>
+        <statBases>
+            <MaxHitPoints>300</MaxHitPoints>
+            <WorkToBuild>19000</WorkToBuild>
+            <Mass>1500</Mass>
+            <Flammability>0.7</Flammability>
+        </statBases>
+        <size>(3,3)</size>
+        <costList>
+            <Steel>120</Steel>
+            <ComponentIndustrial>8</ComponentIndustrial>
+            <ComponentSpacer>2</ComponentSpacer>
+        </costList>
+        <building>
+            <destroySound>BuildingDestroyed_Metal_Big</destroySound>
+        </building>
+        <designationCategory>Biotech</designationCategory>
+        <comps>
+            <li Class="CompProperties_Power">
+                <compClass>CompPowerTrader</compClass>
+                <shortCircuitInRain>true</shortCircuitInRain>
+                <basePowerConsumption>800</basePowerConsumption>
+            </li>
+            <li Class="CompProperties_Flickable"/>
+            <li Class="CompProperties_Facility">
+                <maxSimultaneous>999</maxSimultaneous>
+                <maxDistance>6.9</maxDistance>
+            </li>
+        </comps>
+        <placeWorkers>
+            <li>PlaceWorker_ShowFacilitiesConnections</li>
+        </placeWorkers>
+        <constructionSkillPrerequisite>12</constructionSkillPrerequisite>
+        <uiIconScale>0.85</uiIconScale>
+    </ThingDef>
+
+    <ThingDef ParentName="BuildingBase">
+        <defName>EVL_Cognition_Engine</defName>
+        <label>cognition development engine</label>
+        <description>An advanced machine designed to help mental development. By simulating complex problems and moral dilemmas and presenting them to vat-growing pawns to resolve, it encourages intellectual growth and development of distinct, complex personality. It increases the vat learning rate of all growth vats in a 7 tile radius by 25%, alongside giving every pawn connected to it a chance to develop a random trait. Connecting more than one cognition development engine to the same growth vat will have no effect.</description>
+        <graphicData>
+            <texPath>Things/Building/VRSimulator</texPath>
+            <graphicClass>Graphic_Single</graphicClass>
+            <drawSize>(2, 2)</drawSize>
+            <damageData>
+              <cornerTL>Damage/Corner</cornerTL>
+              <cornerTR>Damage/Corner</cornerTR>
+              <cornerBL>Damage/Corner</cornerBL>
+              <cornerBR>Damage/Corner</cornerBR>
+            </damageData>
+        </graphicData>
+
+        <researchPrerequisites>
+            <li>EVL_VR_Simulators</li>
+        </researchPrerequisites>
+
+        <altitudeLayer>Building</altitudeLayer>
+        <passability>PassThroughOnly</passability>
+        <fillPercent>0.75</fillPercent>
+        <statBases>
+            <MaxHitPoints>180</MaxHitPoints>
+            <WorkToBuild>13000</WorkToBuild>
+            <Mass>900</Mass>
+            <Flammability>0.7</Flammability>
+        </statBases>
+        <size>(2,2)</size>
+        <costList>
+            <Steel>90</Steel>
+            <ComponentIndustrial>6</ComponentIndustrial>
+            <ComponentSpacer>1</ComponentSpacer>
+        </costList>
+        <building>
+            <destroySound>BuildingDestroyed_Metal_Big</destroySound>
+        </building>
+        <designationCategory>Biotech</designationCategory>
+        <comps>
+            <li Class="CompProperties_Power">
+                <compClass>CompPowerTrader</compClass>
+                <shortCircuitInRain>true</shortCircuitInRain>
+                <basePowerConsumption>600</basePowerConsumption>
+            </li>
+            <li Class="CompProperties_Flickable"/>
+            <li Class="CompProperties_Facility">
+                <maxSimultaneous>999</maxSimultaneous>
+                <maxDistance>6.9</maxDistance>
+            </li>
+        </comps>
+        <placeWorkers>
+            <li>PlaceWorker_ShowFacilitiesConnections</li>
+        </placeWorkers>
+        <constructionSkillPrerequisite>11</constructionSkillPrerequisite>
+        <uiIconScale>0.85</uiIconScale>
+    </ThingDef>
+</Defs>
