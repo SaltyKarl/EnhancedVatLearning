@@ -127,25 +127,26 @@ namespace EnhancedVatLearning
                 }
             }
 
+            List<SkillRecord> skillRecords = Pawn.skills.skills.Where((SkillRecord x) => !x.TotallyDisabled).ToList();
+
+            if (skillRecords.Count == 0)
+            {
+                return;
+            }
+
+            List<double> skillWeights = new List<double>();
+            List<double> passionWeights = new List<double>();
+
+            foreach (SkillRecord record in skillRecords)
+            {
+                skillWeights.Add(Math.Sqrt(record.Level) * record.LearnRateFactor(true) * (record.Level >= 20 ? 0 : 1));
+                passionWeights.Add(2 - (int)record.passion);
+            }
+
+            skillRecords[GetRandomIndex(skillWeights)].Learn(additionalBoost, true);
+
             if (gotVR)
             {
-                List<SkillRecord> skillRecords = Pawn.skills.skills.Where((SkillRecord x) => !x.TotallyDisabled).ToList();
-
-                if (skillRecords.Count == 0)
-                {
-                    return;
-                }
-
-                List<double> skillWeights = new List<double>();
-                List<double> passionWeights = new List<double>();
-
-                foreach (SkillRecord record in skillRecords)
-                {
-                    skillWeights.Add(Math.Sqrt(record.Level) * record.LearnRateFactor(true) * (record.Level >= 20 ? 0 : 1));
-                    passionWeights.Add(2 - (int)record.passion);
-                }
-
-                skillRecords[GetRandomIndex(skillWeights)].Learn(additionalBoost, true);
                 passionLearningCycles += 1;
 
                 if (passionLearningCycles > (Props.cycleReq / Math.Round(Math.Sqrt(linkedVRPods), 0, MidpointRounding.AwayFromZero)))
