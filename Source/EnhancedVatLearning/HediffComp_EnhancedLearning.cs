@@ -6,6 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using RimWorld;
 using Verse;
+using HarmonyLib;
+using Verse.AI;
+using Mono.Unix.Native;
 
 [DefOf]
 public static class EVLDefOf
@@ -24,6 +27,47 @@ public static class EVLDefOf
 
 namespace EnhancedVatLearning
 {
+    [StaticConstructorOnStartup]
+    public static class HarmonyPatches
+    {
+        static HarmonyPatches()
+        {
+            Harmony harmony = new Harmony(id: "rimworld.smartkar.enhancedvatlearning.main");
+            harmony.PatchAll();
+        }
+
+        [HarmonyPatch(typeof(Hediff_VatLearning), "Learn")]
+        public static class Hediff_VatLearning_Learn_Patch
+        {
+            public static void Postfix(Hediff_VatLearning __instance)
+            {
+                HediffComp_EnhancedLearning comp = __instance.TryGetComp<HediffComp_EnhancedLearning>();
+                if (comp != null)
+                {
+                    comp.Learn();
+                }
+            }
+        }
+
+        [HarmonyPatch(typeof(ChoiceLetter_GrowthMoment), "ConfigureGrowthLetter")]
+        public static class ChoiceLetter_GrowthMoment_ConfigureGrowthLetter_Patch
+        {
+            public static void Postfix(ChoiceLetter_GrowthMoment __instance)
+            {
+                List<HediffComp_EnhancedLearning> enhancers = __instance.pawn.health.hediffSet.hediffs.OfType<HediffWithComps>().SelectMany((HediffWithComps x) => x.comps).OfType<HediffComp_EnhancedLearning>().ToList();
+
+                foreach (HediffComp_EnhancedLearning comp in enhancers)
+                {
+                    __instance.traitChoiceCount += comp.additionalTraits;
+                    __instance.passionGainsCount += comp.additionalPassions;
+                    FieldInfo field = typeof(ChoiceLetter_GrowthMoment).GetField("passionChoiceCount", BindingFlags.NonPublic | BindingFlags.Instance);
+                    field.SetValue(__instance, field.GetValue(__instance));
+                    comp.additionalPassions = 0;
+                    comp.additionalTraits = 0;
+                }
+            }
+        }
+    }
 
     public class HediffComp_EnhancedLearning : HediffComp
     {
@@ -32,14 +76,8 @@ namespace EnhancedVatLearning
         public int passionLearningCycles = 0;
         public int traitLearningCycles = 0;
 
-        public override void CompPostTick(ref float severityAdjustment)
-        {
-            base.CompPostTick(ref severityAdjustment);
-            if (parent.Severity >= parent.def.maxSeverity)
-            {
-                Learn();
-            }
-        }
+        public int additionalTraits = 0;
+        public int additionalPassions = 0;
 
         public int GetRandomIndex(List<double> weights)
         {
@@ -84,6 +122,7 @@ namespace EnhancedVatLearning
             bool gotVR = false;
             bool gotCognitionEngine = false;
             int linkedVRPods = 0;
+            int linkedCognitionPods = 0;
 
             foreach (Thing facility in facilityComp.LinkedFacilitiesListForReading)
             {
@@ -124,6 +163,27 @@ namespace EnhancedVatLearning
                 {
                     gotCognitionEngine = true;
                     additionalBoost += Props.cognitionEngineBoost;
+                    CompFacility comp = facility.TryGetComp<CompFacility>();
+
+                    foreach (Thing linked in comp.LinkedBuildings)
+                    {
+                        if (linked == vat || linked is not Building_GrowthVat)
+                        {
+                            continue;
+                        }
+
+                        if (typeof(Building_GrowthVat).GetField("selectedPawn", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(linked) == null)
+                        {
+                            continue;
+                        }
+
+                        linkedCognitionPods += 1;
+
+                        if (linkedCognitionPods >= Props.maxCogBoost)
+                        {
+                            break;
+                        }
+                    }
                 }
             }
 
@@ -135,12 +195,10 @@ namespace EnhancedVatLearning
             }
 
             List<double> skillWeights = new List<double>();
-            List<double> passionWeights = new List<double>();
 
             foreach (SkillRecord record in skillRecords)
             {
                 skillWeights.Add(Math.Sqrt(record.Level) * record.LearnRateFactor(true) * (record.Level >= 20 ? 0 : 1));
-                passionWeights.Add(2 - (int)record.passion);
             }
 
             skillRecords[GetRandomIndex(skillWeights)].Learn(additionalBoost, true);
@@ -148,21 +206,20 @@ namespace EnhancedVatLearning
             if (gotVR)
             {
                 passionLearningCycles += 1;
-
-                if (passionLearningCycles > (Props.cycleReq / Math.Round(Math.Sqrt(linkedVRPods), 0, MidpointRounding.AwayFromZero)))
+                if (passionLearningCycles > (Math.Round(Math.Sqrt(Props.vrCycleReq / linkedVRPods), 0, MidpointRounding.AwayFromZero)))
                 {
                     passionLearningCycles = 0;
-                    skillRecords[GetRandomIndex(passionWeights)].passion += 1;
+                    additionalPassions += 1;
                 }
             }
 
             if (gotCognitionEngine)
             {
                 traitLearningCycles += 1;
-                if (traitLearningCycles >= rand.Next(6, 9))
+                if (traitLearningCycles >= (Math.Round(Math.Sqrt(Props.cogCycleReq / linkedCognitionPods), 0, MidpointRounding.AwayFromZero)))
                 {
                     traitLearningCycles = 0;
-                    Pawn.story.traits.GainTrait(PawnGenerator.GenerateTraitsFor(Pawn, 1, null, true)[0]);
+                    additionalTraits += 1;
                 }
             }
         }
@@ -180,6 +237,8 @@ namespace EnhancedVatLearning
         public float vrBoostAdditional = 1200;
         public float cognitionEngineBoost = 2000;
         public int maxVRBoost = 6;
-        public int cycleReq = 6;
+        public int maxCogBoost = 4;
+        public int vrCycleReq = 6;
+        public int cogCycleReq = 8;
     }
 }
