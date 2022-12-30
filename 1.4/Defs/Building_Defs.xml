@@ -66,7 +66,7 @@
     <ThingDef ParentName="BuildingBase">
         <defName>EVL_VR_Simulator</defName>
         <label>VR simulator</label>
-        <description>A powerful supercomputer housing a subpersona AI capable of advanced reality simulation. Connected to a vat-growing pawn via a neural link, it provides them with an interactive environment, enhancing their mental development. Gains further effectiveness when connected to multiple occupied growth vats, providing the pawns inside with a virtual playground to socialize and grow together in. It increases the vat learning rate of all growth vats in a 6 tile radius by 15%, gaining additional 15% effectiveness for each occupied growth vat connected to it, stacking up to 6 times. Connecting more than one VR simulator to the same growth vat will have no effect.</description>
+        <description>A powerful supercomputer housing a subpersona AI capable of advanced reality simulation. Connected to a vat-growing pawn via a neural link, it provides them with an interactive environment, enhancing their mental development and letting them discover their passions. Gains further effectiveness when connected to multiple occupied growth vats, providing the pawns inside with a virtual playground to socialize and grow together in.\n\nIncreases the vat learning rate of all growth vats in a 6tile radius by 15%, gaining additional 15% effectiveness for each occupied growth vat connected to it, stacking up to 6 times. Additionally, every pawn connected to the VR simulator will have a chance to gain passions during their growth moments, based on the amount of pawns connected to it. Connecting more than one VR simulator to the same growth vat will have no effect.</description>
         <graphicData>
             <texPath>Things/Building/VRSimulator</texPath>
             <graphicClass>Graphic_Single</graphicClass>
@@ -124,7 +124,7 @@
     <ThingDef ParentName="BuildingBase">
         <defName>EVL_Cognition_Engine</defName>
         <label>cognition development engine</label>
-        <description>An advanced machine designed to help mental development. By simulating complex problems and moral dilemmas and presenting them to vat-growing pawns to resolve, it encourages intellectual growth and development of distinct, complex personality. It increases the vat learning rate of all growth vats in a 6 tile radius by 25%, alongside giving every pawn connected to it a chance to develop a random trait. Connecting more than one cognition development engine to the same growth vat will have no effect.</description>
+        <description>An advanced machine designed to help mental development. By simulating complex problems and moral dilemmas and presenting them to vat-growing pawns to resolve, it encourages intellectual growth and development of distinct, complex personality.\n\nIt increases the vat learning rate of all growth vats in a 6 tile radius by 25%, alongside enhancing the growth moment trait selection of every pawn connected to it, growing more effective for every connected pawn up to 4. Connecting more than one cognition development engine to the same growth vat will have no effect.</description>
         <graphicData>
             <texPath>Things/Building/CognitionDevelopmentEngine</texPath>
             <graphicClass>Graphic_Multi</graphicClass>
