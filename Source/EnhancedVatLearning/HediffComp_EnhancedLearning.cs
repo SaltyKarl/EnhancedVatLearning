@@ -61,10 +61,13 @@ namespace EnhancedVatLearning
                     __instance.traitChoiceCount += comp.additionalTraits;
                     __instance.passionGainsCount += comp.additionalPassions;
                     FieldInfo field = typeof(ChoiceLetter_GrowthMoment).GetField("passionChoiceCount", BindingFlags.NonPublic | BindingFlags.Instance);
-                    field.SetValue(__instance, field.GetValue(__instance));
+                    field.SetValue(__instance, (int)field.GetValue(__instance) + comp.additionalPassions);
                     comp.additionalPassions = 0;
                     comp.additionalTraits = 0;
                 }
+
+                MethodInfo method = typeof(ChoiceLetter_GrowthMoment).GetMethod("CacheLetterText", BindingFlags.NonPublic | BindingFlags.Instance);
+                method.Invoke(__instance, new object[] { });
             }
         }
     }
@@ -206,7 +209,7 @@ namespace EnhancedVatLearning
             if (gotVR)
             {
                 passionLearningCycles += 1;
-                if (passionLearningCycles > (Math.Round(Math.Sqrt(Props.vrCycleReq / linkedVRPods), 0, MidpointRounding.AwayFromZero)))
+                if (passionLearningCycles > (Math.Round(Math.Sqrt(Props.vrCycleReq / Math.Max(1, linkedVRPods)), 0, MidpointRounding.AwayFromZero)))
                 {
                     passionLearningCycles = 0;
                     additionalPassions += 1;
@@ -216,7 +219,7 @@ namespace EnhancedVatLearning
             if (gotCognitionEngine)
             {
                 traitLearningCycles += 1;
-                if (traitLearningCycles >= (Math.Round(Math.Sqrt(Props.cogCycleReq / linkedCognitionPods), 0, MidpointRounding.AwayFromZero)))
+                if (traitLearningCycles >= (Math.Round(Math.Sqrt(Props.cogCycleReq / Math.Max(1, linkedCognitionPods)), 0, MidpointRounding.AwayFromZero)))
                 {
                     traitLearningCycles = 0;
                     additionalTraits += 1;
