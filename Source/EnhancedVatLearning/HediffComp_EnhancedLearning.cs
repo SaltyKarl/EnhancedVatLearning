@@ -61,7 +61,7 @@ namespace EnhancedVatLearning
                     __instance.traitChoiceCount += comp.additionalTraits;
                     __instance.passionGainsCount += comp.additionalPassions;
                     FieldInfo field = typeof(ChoiceLetter_GrowthMoment).GetField("passionChoiceCount", BindingFlags.NonPublic | BindingFlags.Instance);
-                    field.SetValue(__instance, (int)field.GetValue(__instance) + comp.additionalPassions);
+                    field.SetValue(__instance, (int)field.GetValue(__instance) + comp.additionalPassions * 2);
                     comp.additionalPassions = 0;
                     comp.additionalTraits = 0;
                 }
