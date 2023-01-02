@@ -44,11 +44,9 @@
 		  	<li>Enhanced Growth Vat Learning</li>
 		</mods>
 		<match Class="PatchOperationAdd">
-			<xpath>/Defs/HediffDef[defName="EnhancedVatLearningHediff"]</xpath>
+			<xpath>/Defs/HediffDef[defName="EnhancedVatLearningHediff"]/comps</xpath>
 			<value>
-				<comps>
-					<li Class="EnhancedVatLearning.HediffCompProperties_EnhancedLearning" />
-				</comps>
+				<li Class="EnhancedVatLearning.HediffCompProperties_EnhancedLearning" />
 			</value>
 		</match>
 	</Operation>
