@@ -56,14 +56,25 @@ namespace EnhancedVatLearning
             {
                 List<HediffComp_EnhancedLearning> enhancers = __instance.pawn.health.hediffSet.hediffs.OfType<HediffWithComps>().SelectMany((HediffWithComps x) => x.comps).OfType<HediffComp_EnhancedLearning>().ToList();
 
+                int passionsLeft = 0;
+
+                foreach (SkillRecord record in __instance.pawn.skills.skills)
+                {
+                    if (record.passion != Passion.Major)
+                    {
+                        passionsLeft++;
+                    }
+                }
+
                 foreach (HediffComp_EnhancedLearning comp in enhancers)
                 {
                     __instance.traitChoiceCount += comp.additionalTraits;
-                    __instance.passionGainsCount += comp.additionalPassions;
+                    __instance.passionGainsCount += Math.Min(passionsLeft, comp.additionalPassions);
                     FieldInfo field = typeof(ChoiceLetter_GrowthMoment).GetField("passionChoiceCount", BindingFlags.NonPublic | BindingFlags.Instance);
-                    field.SetValue(__instance, (int)field.GetValue(__instance) + comp.additionalPassions * 2);
+                    field.SetValue(__instance, (int)field.GetValue(__instance) + Math.Min(comp.additionalPassions * 2, passionsLeft));
                     comp.additionalPassions = 0;
                     comp.additionalTraits = 0;
+                    passionsLeft -= comp.additionalTraits;
                 }
 
                 MethodInfo method = typeof(ChoiceLetter_GrowthMoment).GetMethod("CacheLetterText", BindingFlags.NonPublic | BindingFlags.Instance);
