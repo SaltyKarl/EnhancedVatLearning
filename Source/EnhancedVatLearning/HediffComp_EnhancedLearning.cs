@@ -104,6 +104,15 @@ namespace EnhancedVatLearning
             return 0; //somehow
         }
 
+        public override void CompExposeData()
+        {
+            base.CompExposeData();
+            Scribe_Values.Look(ref passionLearningCycles, "passionLearningCycles");
+            Scribe_Values.Look(ref traitLearningCycles, "traitLearningCycles");
+            Scribe_Values.Look(ref additionalTraits, "additionalTraits");
+            Scribe_Values.Look(ref additionalPassions, "additionalPassions");
+        }
+
         public void Learn()
         {
             if (Pawn.skills == null)
