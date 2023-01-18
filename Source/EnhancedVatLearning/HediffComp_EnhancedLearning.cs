@@ -69,9 +69,8 @@ namespace EnhancedVatLearning
                 foreach (HediffComp_EnhancedLearning comp in enhancers)
                 {
                     __instance.traitChoiceCount += comp.additionalTraits;
-                    __instance.passionGainsCount = Math.Min(__instance.passionGainsCount + passionsLeft, comp.additionalPassions);
-                    FieldInfo field = typeof(ChoiceLetter_GrowthMoment).GetField("passionChoiceCount", BindingFlags.NonPublic | BindingFlags.Instance);
-                    field.SetValue(__instance, Math.Min((int)field.GetValue(__instance) + comp.additionalPassions * 2, passionsLeft));
+                    __instance.passionGainsCount = Math.Min(__instance.passionGainsCount + comp.additionalPassions, passionsLeft);
+                    __instance.passionChoiceCount = Math.Min(__instance.passionChoiceCount + comp.additionalPassions * 2, passionsLeft);
                     comp.additionalPassions = 0;
                     comp.additionalTraits = 0;
                     passionsLeft -= comp.additionalTraits;
@@ -166,7 +165,9 @@ namespace EnhancedVatLearning
                             continue;
                         }
 
-                        if (typeof(Building_GrowthVat).GetField("selectedPawn", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(linked) == null)
+                        Building_GrowthVat linkedVat = linked as Building_GrowthVat;
+
+                        if (vat.selectedPawn == null)
                         {
                             continue;
                         }
@@ -195,7 +196,9 @@ namespace EnhancedVatLearning
                             continue;
                         }
 
-                        if (typeof(Building_GrowthVat).GetField("selectedPawn", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(linked) == null)
+                        Building_GrowthVat linkedVat = linked as Building_GrowthVat;
+
+                        if (vat.selectedPawn == null)
                         {
                             continue;
                         }
