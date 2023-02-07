@@ -30,10 +30,16 @@ namespace EnhancedVatLearning
     [StaticConstructorOnStartup]
     public static class HarmonyPatches
     {
+        public static bool enableCompat = false;
         static HarmonyPatches()
         {
             Harmony harmony = new Harmony(id: "rimworld.smartkar.enhancedvatlearning.main");
             harmony.PatchAll();
+
+            if (ModLister.GetActiveModWithIdentifier("com.makeitso.enhancedgrowthvatlearning") != null)
+            {
+                enableCompat = true;
+            }
         }
 
         [HarmonyPatch(typeof(Hediff_VatLearning), "Learn")]
@@ -227,12 +233,19 @@ namespace EnhancedVatLearning
                 skillWeights.Add(Math.Sqrt(record.Level) * record.LearnRateFactor(true) * (record.Level >= 20 ? 0 : 1));
             }
 
-            skillRecords[GetRandomIndex(skillWeights)].Learn(additionalBoost, true);
+            float divider = 1f;
+
+            if (HarmonyPatches.enableCompat)
+            {
+                divider = 9f;
+            }
+
+            skillRecords[GetRandomIndex(skillWeights)].Learn(additionalBoost / divider, true);
 
             if (gotVR)
             {
                 passionLearningCycles += 1;
-                if (passionLearningCycles > (Math.Round(Math.Sqrt(Props.vrCycleReq / Math.Max(1, linkedVRPods)), 0, MidpointRounding.AwayFromZero)))
+                if (passionLearningCycles > (Math.Round(Math.Sqrt(Props.vrCycleReq / Math.Max(1, linkedVRPods)), 0, MidpointRounding.AwayFromZero)) * divider)
                 {
                     passionLearningCycles = 0;
                     additionalPassions += 1;
@@ -242,7 +255,7 @@ namespace EnhancedVatLearning
             if (gotCognitionEngine)
             {
                 traitLearningCycles += 1;
-                if (traitLearningCycles >= (Math.Round(Math.Sqrt(Props.cogCycleReq / Math.Max(1, linkedCognitionPods)), 0, MidpointRounding.AwayFromZero)))
+                if (traitLearningCycles >= (Math.Round(Math.Sqrt(Props.cogCycleReq / Math.Max(1, linkedCognitionPods)), 0, MidpointRounding.AwayFromZero)) * divider)
                 {
                     traitLearningCycles = 0;
                     additionalTraits += 1;
