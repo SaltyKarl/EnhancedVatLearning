@@ -30,10 +30,16 @@ namespace EnhancedVatLearning
     [StaticConstructorOnStartup]
     public static class HarmonyPatches
     {
+        public static bool enableCompat = false;
         static HarmonyPatches()
         {
             Harmony harmony = new Harmony(id: "rimworld.smartkar.enhancedvatlearning.main");
             harmony.PatchAll();
+
+            if (ModLister.GetActiveModWithIdentifier("com.makeitso.enhancedgrowthvatlearning") != null)
+            {
+                enableCompat = true;
+            }
         }
 
         [HarmonyPatch(typeof(Hediff_VatLearning), "Learn")]
@@ -56,14 +62,24 @@ namespace EnhancedVatLearning
             {
                 List<HediffComp_EnhancedLearning> enhancers = __instance.pawn.health.hediffSet.hediffs.OfType<HediffWithComps>().SelectMany((HediffWithComps x) => x.comps).OfType<HediffComp_EnhancedLearning>().ToList();
 
+                int passionsLeft = 0;
+
+                foreach (SkillRecord record in __instance.pawn.skills.skills)
+                {
+                    if (record.passion != Passion.Major)
+                    {
+                        passionsLeft++;
+                    }
+                }
+
                 foreach (HediffComp_EnhancedLearning comp in enhancers)
                 {
                     __instance.traitChoiceCount += comp.additionalTraits;
-                    __instance.passionGainsCount += comp.additionalPassions;
-                    FieldInfo field = typeof(ChoiceLetter_GrowthMoment).GetField("passionChoiceCount", BindingFlags.NonPublic | BindingFlags.Instance);
-                    field.SetValue(__instance, (int)field.GetValue(__instance) + comp.additionalPassions * 2);
+                    __instance.passionGainsCount = Math.Min(__instance.passionGainsCount + comp.additionalPassions, passionsLeft);
+                    __instance.passionChoiceCount = Math.Min(__instance.passionChoiceCount + comp.additionalPassions * 2, passionsLeft);
                     comp.additionalPassions = 0;
                     comp.additionalTraits = 0;
+                    passionsLeft -= comp.additionalTraits;
                 }
 
                 MethodInfo method = typeof(ChoiceLetter_GrowthMoment).GetMethod("CacheLetterText", BindingFlags.NonPublic | BindingFlags.Instance);
@@ -102,6 +118,15 @@ namespace EnhancedVatLearning
             }
 
             return 0; //somehow
+        }
+
+        public override void CompExposeData()
+        {
+            base.CompExposeData();
+            Scribe_Values.Look(ref passionLearningCycles, "passionLearningCycles");
+            Scribe_Values.Look(ref traitLearningCycles, "traitLearningCycles");
+            Scribe_Values.Look(ref additionalTraits, "additionalTraits");
+            Scribe_Values.Look(ref additionalPassions, "additionalPassions");
         }
 
         public void Learn()
@@ -146,7 +171,9 @@ namespace EnhancedVatLearning
                             continue;
                         }
 
-                        if (typeof(Building_GrowthVat).GetField("selectedPawn", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(linked) == null)
+                        Building_GrowthVat linkedVat = linked as Building_GrowthVat;
+
+                        if (vat.selectedPawn == null)
                         {
                             continue;
                         }
@@ -175,7 +202,9 @@ namespace EnhancedVatLearning
                             continue;
                         }
 
-                        if (typeof(Building_GrowthVat).GetField("selectedPawn", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(linked) == null)
+                        Building_GrowthVat linkedVat = linked as Building_GrowthVat;
+
+                        if (vat.selectedPawn == null)
                         {
                             continue;
                         }
@@ -204,12 +233,19 @@ namespace EnhancedVatLearning
                 skillWeights.Add(Math.Sqrt(record.Level) * record.LearnRateFactor(true) * (record.Level >= 20 ? 0 : 1));
             }
 
-            skillRecords[GetRandomIndex(skillWeights)].Learn(additionalBoost, true);
+            float divider = 1f;
+
+            if (HarmonyPatches.enableCompat)
+            {
+                divider = 9f;
+            }
+
+            skillRecords[GetRandomIndex(skillWeights)].Learn(additionalBoost / divider, true);
 
             if (gotVR)
             {
                 passionLearningCycles += 1;
-                if (passionLearningCycles > (Math.Round(Math.Sqrt(Props.vrCycleReq / Math.Max(1, linkedVRPods)), 0, MidpointRounding.AwayFromZero)))
+                if (passionLearningCycles > (Math.Round(Math.Sqrt(Props.vrCycleReq / Math.Max(1, linkedVRPods)), 0, MidpointRounding.AwayFromZero)) * divider)
                 {
                     passionLearningCycles = 0;
                     additionalPassions += 1;
@@ -219,7 +255,7 @@ namespace EnhancedVatLearning
             if (gotCognitionEngine)
             {
                 traitLearningCycles += 1;
-                if (traitLearningCycles >= (Math.Round(Math.Sqrt(Props.cogCycleReq / Math.Max(1, linkedCognitionPods)), 0, MidpointRounding.AwayFromZero)))
+                if (traitLearningCycles >= (Math.Round(Math.Sqrt(Props.cogCycleReq / Math.Max(1, linkedCognitionPods)), 0, MidpointRounding.AwayFromZero)) * divider)
                 {
                     traitLearningCycles = 0;
                     additionalTraits += 1;
