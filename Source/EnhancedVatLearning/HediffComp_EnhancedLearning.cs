@@ -48,6 +48,7 @@ namespace EnhancedVatLearning
             public static void Postfix(Hediff_VatLearning __instance)
             {
                 HediffComp_EnhancedLearning comp = __instance.TryGetComp<HediffComp_EnhancedLearning>();
+
                 if (comp != null)
                 {
                     comp.Learn();
@@ -75,15 +76,23 @@ namespace EnhancedVatLearning
                 foreach (HediffComp_EnhancedLearning comp in enhancers)
                 {
                     __instance.traitChoiceCount += comp.additionalTraits;
+
+                    /*
                     __instance.passionGainsCount = Math.Min(__instance.passionGainsCount + comp.additionalPassions, passionsLeft);
                     __instance.passionChoiceCount = Math.Min(__instance.passionChoiceCount + comp.additionalPassions * 2, passionsLeft);
                     comp.additionalPassions = 0;
                     comp.additionalTraits = 0;
                     passionsLeft -= comp.additionalTraits;
+                    */
+
+                    __instance.passionGainsCount = Math.Min(__instance.passionGainsCount + comp.additionalPassions, passionsLeft);
+                    __instance.passionChoiceCount = Math.Min(__instance.passionChoiceCount + comp.additionalPassions * 2, passionsLeft);
+
+                    comp.additionalPassions = 0;
+                    comp.additionalTraits = 0;
                 }
 
-                MethodInfo method = typeof(ChoiceLetter_GrowthMoment).GetMethod("CacheLetterText", BindingFlags.NonPublic | BindingFlags.Instance);
-                method.Invoke(__instance, new object[] { });
+                __instance.CacheLetterText();
             }
         }
     }
@@ -245,20 +254,52 @@ namespace EnhancedVatLearning
             if (gotVR)
             {
                 passionLearningCycles += 1;
-                if (passionLearningCycles > (Math.Round(Math.Sqrt(Props.vrCycleReq / Math.Max(1, linkedVRPods)), 0, MidpointRounding.AwayFromZero)) * divider)
+
+                if (linkedVRPods <= 2)
                 {
-                    passionLearningCycles = 0;
-                    additionalPassions += 1;
+                    if (passionLearningCycles >= 3 * divider)
+                    {
+                        passionLearningCycles = 0;
+                        additionalPassions += 1;
+                    }
+                }
+                else if (linkedVRPods <= 5)
+                {
+                    if (passionLearningCycles >= 2 * divider)
+                    {
+                        passionLearningCycles = 0;
+                        additionalPassions += 1;
+                    }
+                }
+                else
+                {
+                    if (passionLearningCycles >= 1 * divider)
+                    {
+                        passionLearningCycles = 0;
+                        additionalPassions += 1;
+                    }
                 }
             }
 
             if (gotCognitionEngine)
             {
                 traitLearningCycles += 1;
-                if (traitLearningCycles >= (Math.Round(Math.Sqrt(Props.cogCycleReq / Math.Max(1, linkedCognitionPods)), 0, MidpointRounding.AwayFromZero)) * divider)
+
+                if (linkedCognitionPods <= 2)
                 {
-                    traitLearningCycles = 0;
-                    additionalTraits += 1;
+                    if (traitLearningCycles >= 2 * divider)
+                    {
+                        traitLearningCycles = 0;
+                        additionalTraits += 1;
+                    }
+                }
+                else
+                {
+                    if (traitLearningCycles >= 1 * divider)
+                    {
+                        traitLearningCycles = 0;
+                        additionalTraits += 1;
+                    }
                 }
             }
         }
@@ -275,9 +316,7 @@ namespace EnhancedVatLearning
         public float vrBoost = 1200;
         public float vrBoostAdditional = 1200;
         public float cognitionEngineBoost = 2000;
-        public int maxVRBoost = 6;
+        public int maxVRBoost = 8;
         public int maxCogBoost = 4;
-        public int vrCycleReq = 6;
-        public int cogCycleReq = 8;
     }
 }

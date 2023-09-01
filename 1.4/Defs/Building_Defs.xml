@@ -119,6 +119,7 @@
         </placeWorkers>
         <constructionSkillPrerequisite>12</constructionSkillPrerequisite>
         <uiIconScale>0.85</uiIconScale>
+        <rotatable>false</rotatable>
     </ThingDef>
 
     <ThingDef ParentName="BuildingBase">
