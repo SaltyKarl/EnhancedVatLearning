@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "ErOT1MOOkGdBC76qEs9Sc1FiqR+IunAN29O6gEQqSlT4u7vi8p1WQ3H8uTG8AAsDS9gk4df0ax2LxDTDskBCSg==",
+  "dgSpecHash": "xvLNsu5ii3DvAx8+ws3RceBbjh5jHWB+RrWpMCuNr9UaQIMvEucaRT9JaMqAavnX7mIB9cQijykz9Yv6eF49yw==",
   "success": true,
   "projectFilePath": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\EnhancedVatLearning\\Source\\EnhancedVatLearning\\EnhancedVatLearning.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Artemy\\.nuget\\packages\\krafs.publicizer\\2.1.0\\krafs.publicizer.2.1.0.nupkg.sha512",
-    "C:\\Users\\Artemy\\.nuget\\packages\\krafs.rimworld.ref\\1.4.3580\\krafs.rimworld.ref.1.4.3580.nupkg.sha512"
+    "C:\\Users\\Artemy\\.nuget\\packages\\krafs.rimworld.ref\\1.5.4061\\krafs.rimworld.ref.1.5.4061.nupkg.sha512"
   ],
   "logs": []
 }

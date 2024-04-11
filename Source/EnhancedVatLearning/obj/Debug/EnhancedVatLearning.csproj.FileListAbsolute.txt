@@ -4,3 +4,5 @@ C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\EnhancedVatLearning\
 C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\EnhancedVatLearning\1.4\Assemblies\EnhancedVatLearning.pdb
 C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\EnhancedVatLearning\Source\EnhancedVatLearning\obj\Debug\EnhancedVatLearning.dll
 C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\EnhancedVatLearning\Source\EnhancedVatLearning\obj\Debug\EnhancedVatLearning.pdb
+C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\EnhancedVatLearning\1.5\Assemblies\EnhancedVatLearning.dll
+C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\EnhancedVatLearning\1.5\Assemblies\EnhancedVatLearning.pdb
