@@ -172,6 +172,7 @@ namespace EnhancedVatLearning
                 {
                     CompFacility comp = facility.TryGetComp<CompFacility>();
                     additionalBoost += Props.vrBoost;
+                    gotVR = true;
 
                     foreach (Thing linked in comp.LinkedBuildings)
                     {
@@ -182,7 +183,7 @@ namespace EnhancedVatLearning
 
                         Building_GrowthVat linkedVat = linked as Building_GrowthVat;
 
-                        if (vat.selectedPawn == null)
+                        if (linkedVat.selectedPawn == null)
                         {
                             continue;
                         }
@@ -195,8 +196,6 @@ namespace EnhancedVatLearning
                             break;
                         }
                     }
-
-                    gotVR = true;
                 }
                 else if (facility.def == EVLDefOf.EVL_Cognition_Engine && !gotCognitionEngine)
                 {
