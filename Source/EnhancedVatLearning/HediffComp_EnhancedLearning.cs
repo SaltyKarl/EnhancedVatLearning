@@ -107,28 +107,6 @@ namespace EnhancedVatLearning
         public int additionalTraits = 0;
         public int additionalPassions = 0;
 
-        public int GetRandomIndex(List<double> weights)
-        {
-            double curSum = 0;
-            double randomNum = rand.NextDouble() * weights.Sum();
-            for (int i = 0; i < weights.Count; i++)
-            {
-                if (weights[i] == 0)
-                {
-                    continue;
-                }
-
-                curSum += weights[i];
-
-                if (randomNum <= curSum)
-                {
-                    return i;
-                }
-            }
-
-            return 0; //somehow
-        }
-
         public override void CompExposeData()
         {
             base.CompExposeData();
@@ -234,21 +212,17 @@ namespace EnhancedVatLearning
                 return;
             }
 
-            List<double> skillWeights = new List<double>();
-
-            foreach (SkillRecord record in skillRecords)
-            {
-                skillWeights.Add(Math.Sqrt(record.Level) * record.LearnRateFactor(true) * (record.Level >= 20 ? 0 : 1));
-            }
-
             float divider = 1f;
 
             if (HarmonyPatches.enableCompat)
             {
                 divider = 9f;
             }
-
-            skillRecords[GetRandomIndex(skillWeights)].Learn(additionalBoost / divider, true);
+            
+            if (skillRecords.Where((SkillRecord x) => x.Level < 20).Any())
+            {
+                skillRecords.RandomElementByWeight((SkillRecord x) => x.Level >= 20 ? 0 : ((float)Math.Sqrt(x.Level) * x.LearnRateFactor(true))).Learn(additionalBoost / divider, true);
+            }
 
             if (gotVR)
             {
