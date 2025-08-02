@@ -2,7 +2,7 @@
 *.db
 *.cache
 */Thumbs.db
-*/.vs/*
+Source/*/.vs/*
 Source/*/obj/*
 Source/*/bin/*
 /Source/*/*.csproj.user
@@ -18,3 +18,4 @@ Assembly-CSharp.dll
 UnityEngine.dll 
 
 # Exclude optimized .dds textures from RimPy / png2dds
+*.dds
