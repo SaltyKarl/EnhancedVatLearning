@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "xvLNsu5ii3DvAx8+ws3RceBbjh5jHWB+RrWpMCuNr9UaQIMvEucaRT9JaMqAavnX7mIB9cQijykz9Yv6eF49yw==",
+  "dgSpecHash": "PeC9huwMUZA=",
   "success": true,
-  "projectFilePath": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\EnhancedVatLearning\\Source\\EnhancedVatLearning\\EnhancedVatLearning.csproj",
+  "projectFilePath": "H:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\EnhancedVatLearning\\Source\\EnhancedVatLearning\\EnhancedVatLearning.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Artemy\\.nuget\\packages\\krafs.publicizer\\2.1.0\\krafs.publicizer.2.1.0.nupkg.sha512",
-    "C:\\Users\\Artemy\\.nuget\\packages\\krafs.rimworld.ref\\1.5.4061\\krafs.rimworld.ref.1.5.4061.nupkg.sha512"
+    "C:\\Users\\KealI\\.nuget\\packages\\krafs.publicizer\\2.3.0\\krafs.publicizer.2.3.0.nupkg.sha512",
+    "C:\\Users\\KealI\\.nuget\\packages\\krafs.rimworld.ref\\1.6.4535\\krafs.rimworld.ref.1.6.4535.nupkg.sha512",
+    "C:\\Users\\KealI\\.nuget\\packages\\lib.harmony\\2.3.6\\lib.harmony.2.3.6.nupkg.sha512"
   ],
   "logs": []
 }
