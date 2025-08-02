@@ -21,3 +21,5 @@ UnityEngine.dll
 
 # Exclude optimized .dds textures from RimPy / png2dds
 *.dds
+/Source/EnhancedVatLearning/.vs
+/Source/EnhancedVatLearning/obj
