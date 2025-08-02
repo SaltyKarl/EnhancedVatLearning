@@ -8,7 +8,6 @@ using RimWorld;
 using Verse;
 using HarmonyLib;
 using Verse.AI;
-using Mono.Unix.Native;
 
 [DefOf]
 public static class EVLDefOf
