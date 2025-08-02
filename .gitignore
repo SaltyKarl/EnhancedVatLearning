@@ -1,6 +1,8 @@
 *.suo
 *.db
 *.cache
+*.json
+*.vsidx
 */Thumbs.db
 Source/*/.vs/*
 Source/*/obj/*
